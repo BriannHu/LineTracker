@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 
+
+
 export default function CreateReqest() {
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState('Coffee');
     const [location, setLocation] = useState('');
     const [radius, setRadius] = useState(0);
+
+    export default class Data extends React.Component {
+        state = {
+            Category: '',
+            Location: '',
+            Radius  : 0
+        }
+    }
     
     /*
     useEffect(() => {
@@ -18,19 +28,29 @@ export default function CreateReqest() {
     }, []); 
     */
 
-    /*
+    
     const handleSubmit = (e) =>  {
         e.preventDefault();
-        const exercise = {username, description, duration, date};
-        axios.post("http://localhost:5000/exercises/add", exercise)
-        .then(res => console.log(res.data));
-    } */
 
+        Data = {
+            category,
+            location,
+            radius
+        };
+        
+        console.log(Data)
+        
+        axios.post("http://localhost:3000/data/", Data)
+        .then(res => console.log(res.data));
+
+    }  
+
+    console.log("Hello")
     return (
         <div className="container">
             <br/>
             <h3>Send New Request</h3>
-            <form /*onSubmit={handleSubmit}*/>
+            <form onSubmit={handleSubmit}>
                 <div className="form-group"> 
                 <label>Category: </label>
                 <select

@@ -4,12 +4,11 @@ import axios from 'axios'
 
 const Exercise = (props) => (
     <tr>
-      <td>{props.exercise.username}</td>
-      <td>{props.exercise.description}</td>
-      <td>{props.exercise.duration}</td>
-      <td>{props.exercise.date.substring(0,10)}</td>
+      <td>{props.exercise.category}</td>
+      <td>{props.exercise.location}</td>
+      <td>{props.exercise.radius}</td>
       <td>
-        <Link to={"/edit/"+props.exercise._id}>edit</Link> | <a href="/#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
+        <Link to={"/data/"+props.exercise._id}>data</Link> 
       </td>
     </tr>
   )
@@ -18,15 +17,13 @@ export default class ListView extends Component {
     constructor(props) {
         super(props);
 
-        this.deleteExercise = this.deleteExercise.bind(this);
-
         this.state = {
             exercises: []
         }
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/exercises/')
+        axios.get('http://localhost:3000/data')
         .then(response => {
             this.setState({ exercises: response.data })
         })
@@ -35,32 +32,20 @@ export default class ListView extends Component {
         })
     }
 
-    deleteExercise(id) {
-        axios.delete('http://localhost:5000/exercises/' + id)
-        .then(res => console.log(res.data));
-        this.setState({
-            exercises: this.state.exercises.filter(el => el._id !== id)
-        })
-    }
-
     exerciseList() {
-        return this.state.exercises.map(currentexercise => {
-            return <Exercise exercise={currentexercise} deleteExercise={this.deleteExercise} key={currentexercise._id} />
-        })
+      return <Exercise exercise/>
     }
 
     render() {
         return (
             <div>
-            <h3>Logged Exercises</h3>
+            <h3>Logged Data</h3>
             <table className="table">
               <thead className="thead-light">
                 <tr>
-                  <th>Username</th>
-                  <th>Description</th>
-                  <th>Duration</th>
-                  <th>Date</th>
-                  <th>Actions</th>
+                  <th>Category</th>
+                  <th>Location</th>
+                  <th>Radius</th>
                 </tr>
               </thead>
               <tbody>
